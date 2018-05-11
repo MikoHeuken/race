@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Auto {
+public class Auto implements Comparable<Auto> {
 	
 	int nummer;
 	double vmax;
@@ -9,6 +9,7 @@ public class Auto {
 	double consumption;
 	double energy_remaining;
 	double failure;
+	double time;
 	
 	
 	public Auto(int nummer, double vmax, double capacity, double consumption){
@@ -31,11 +32,18 @@ public class Auto {
 		double stoptime = (21*stops) + (capacity*stops) + random.nextInt((int)stops*3);
 		double failure = failure();
 		speed = failure;
-		double time = (racelength/speed)*3600+(stoptime*stops);
+		time = (racelength/speed)*3600+(stoptime*stops);
+		time = time/3600;
 		
 		return time;
 		
 	}
+	
+	public double getTime(){
+		
+		return time;
+	}
+	
  
  
 	public double failure(){
@@ -60,9 +68,17 @@ public class Auto {
 				"\n Derzeitige Durschnittsgeschwindigkeit: "+speed+
 				"\n Akkukapazität: "+capacity+
 				"\n Restenergie: "+energy_remaining+
-				"\n Verbrauch auf 100km: "+consumption;
+				"\n Verbrauch auf 100km: "+consumption+
+				"\n Letzte Rennzeit: "+time;
+
 		
 
+	}
+	
+	@Override
+	public int compareTo(Auto auto){
+		
+		return Double.compare(this.getTime(), auto.getTime());
 	}
   
   
